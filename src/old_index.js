@@ -7,7 +7,6 @@ var util            = require('util');
 
 var POLL_INTERVAL   = process.env.POLL_INTERVAL || 500;
 
-
 var queue = function (worker) {
     var _q = [];
     var running = false;
