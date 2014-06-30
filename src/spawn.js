@@ -7,11 +7,13 @@ module.exports = function (options, cb){
 	var path   = options.phantomPath || 'phantomjs';
 	var args   = (options.parameters || {});
 	var bridge = __dirname + '\\bridge.js';
+	var result = [];
 
-	args = args.map(function(value, key){
-		return '--' + key + '=' + value;
-	});
-    var phantom = spawn(path, args.concat(bridge));
+	for(var key in args) {
+		result.push('--' + key + '=' + args[key]);
+	}
+
+    var phantom = spawn(path, result.concat(bridge));
 
     function fatalError(err) {
     	if(err && err.stack)console.error(err.stack);
@@ -27,7 +29,9 @@ module.exports = function (options, cb){
 	errorEvents.forEach(function(e){
 		process.on(e, fatalError);
 	});
-    phantom.once('error', cb);
+    phantom.once('error', function(err){
+    	cb(err);
+    });
 
     var ignorePattern = options.ignoreErrorPattern;
     phantom.stderr.on('data', function (data) {
@@ -71,7 +75,7 @@ module.exports = function (options, cb){
                         port = phantomPorts[i];
                     }
         		}
-        		if(port) cb(errProcess || errPhantom, phantom, port);
+        		if(port) cb(null, phantom, port);
         		else cb("Error extracting port.");
         	});
         });
@@ -106,15 +110,14 @@ function getProcessPorts(pid, cb){
     }
 
     exec(cmd, function (err, stdout, stderr) {
-
     	// This can happen if grep finds no matching lines, so ignore it.
     	if (err !== null)stdout = '';
         
-        var address = /(?:127\.0\.0\.1|localhost):(\d+)/ig;
+        var address = /(?:127\.0\.0\.1|localhost|0\.0\.0\.0):(\d+)/ig;
         var match, ports = [];
                 
         while (match = address.exec(stdout)) {
-            ports.push(match[1]);
+            if(match[1] !== '0')ports.push(match[1]);
         }
 
         cb(err, ports);
