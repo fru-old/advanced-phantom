@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src\spawn.js</title>
+    <title>Code coverage report for src\message.js</title>
     <meta charset="utf-8">
 
     <link rel="stylesheet" href="../prettify.css">
@@ -196,23 +196,23 @@
 </head>
 <body>
 <div class="header medium">
-    <h1>Code coverage report for <span class="entity">src\spawn.js</span></h1>
+    <h1>Code coverage report for <span class="entity">src\message.js</span></h1>
     <h2>
         
-        Statements: <span class="metric">72.46% <small>(50 / 69)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">66.28% <small>(57 / 86)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">40.74% <small>(11 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">54.76% <small>(23 / 42)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Functions: <span class="metric">78.57% <small>(11 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">76.47% <small>(13 / 17)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">72.31% <small>(47 / 65)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">66.67% <small>(54 / 81)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
-    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src\</a> &#187; spawn.js</div>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src\</a> &#187; message.js</div>
 </div>
 <div class="body">
 <pre><table class="coverage">
@@ -344,70 +344,63 @@
 126
 127
 128
-129</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">48</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-yes">45</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-no">&nbsp;</span>
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -415,16 +408,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-yes">15</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -438,174 +428,352 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30</span>
-<span class="cline-any cline-yes">30</span>
-<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30</span>
-<span class="cline-any cline-yes">30</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30</span>
-<span class="cline-any cline-yes">30</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30</span>
-<span class="cline-any cline-yes">52</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var spawn = require('child_process').spawn;
-var exec  = require('child_process').exec;
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">96</span>
+<span class="cline-any cline-yes">95</span>
+<span class="cline-any cline-yes">81</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">102</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* 
+ * This file contains both the pahantom and nodejs communication methods 
+ * to send and recieve messages between the two processes.
+ *
+ * @author Florian Rueberg
+ *
+ */
 &nbsp;
 &nbsp;
-module.exports = function (options, cb){
 &nbsp;
-	var path   = options.phantomPath || <span class="branch-1 cbranch-no" title="branch not covered" >'phantomjs';</span>
-	var args   = (options.parameters || {});
-	var bridge = __dirname + '\\bridge.js';
-	var result = [];
+// Use `exports.phantom` on phantom to send or recieve messages via a http 
+// server. 
 &nbsp;
-	for(var key in args) {
-		result.push('--' + key + '=' + args[key]);
+// When `GET` is called, stored messages are send back to nodejs. Messages
+// that are to be send to node are on the `message_stack` which is emptied
+// after all the messages are send.
+&nbsp;
+// To continuously recieve the messages nodejs has to poll the server with
+// `GET` requests.
+&nbsp;
+// When nodejs sends a message to phantomjs it uses a `POST` request and a 
+// JSON message to transfer data.
+&nbsp;
+// Use `exports.nodejs` on nodejs to send or recieve messages via json web
+// requests.
+&nbsp;
+module.exports = { recieve: function(recieve, port) {
+&nbsp;
+	// The return value of this method is send
+	var result = {};
+&nbsp;
+	// Detect if this is the phantom or node instance
+	var isPhantom = typeof phantom !== 'undefined' &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >phantom.version </span>&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >phantom.onError;</span>
+	<span class="missing-if-branch" title="if path not taken" >I</span>if(isPhantom){
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		var message_stack = [];</span>
+<span class="cstat-no" title="statement not covered" >		var service = <span class="fstat-no" title="function not covered" >function(req, res) {</span></span>
+&nbsp;
+			// Initially 200 but is changed when an error occures.
+<span class="cstat-no" title="statement not covered" >			res.statusCode = 200;</span>
+<span class="cstat-no" title="statement not covered" >			res.setHeader('Content-Type', 'application/json');</span>
+			
+<span class="cstat-no" title="statement not covered" >			if(req.method === 'GET'){</span>
+				// Send all stored messages.
+<span class="cstat-no" title="statement not covered" >				res.write(JSON.stringify(message_stack));</span>
+<span class="cstat-no" title="statement not covered" >				res.close();</span>
+<span class="cstat-no" title="statement not covered" >				message_stack = [];</span>
+&nbsp;
+			}else <span class="cstat-no" title="statement not covered" >if(req.method === 'POST'){</span>
+				// Called when the request is done
+<span class="fstat-no" title="function not covered" >				function done(err, message) {</span>
+<span class="cstat-no" title="statement not covered" >					if(err){</span>
+<span class="cstat-no" title="statement not covered" >						message = err;</span>
+<span class="cstat-no" title="statement not covered" >						res.statusCode = 500;</span>
+					}
+<span class="cstat-no" title="statement not covered" >					res.write(JSON.stringify(message || 'success'));</span>
+<span class="cstat-no" title="statement not covered" >					res.close();</span>
+				}
+				// Catch all errors and return them
+<span class="cstat-no" title="statement not covered" >				try{</span>
+<span class="cstat-no" title="statement not covered" >					recieve(JSON.parse(req.post), done);</span>
+				}catch(err){
+<span class="cstat-no" title="statement not covered" >					done(err);</span>
+				}
+				
+			}else{
+<span class="cstat-no" title="statement not covered" >				throw "Unsupported request type!";</span>
+			}
+		};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		var webserver = require('webserver').create();</span>
+<span class="cstat-no" title="statement not covered" >		var server = webserver.listen('127.0.0.1:' + (port || 0), service);</span>
+		
+		// Use this to send messages to nodejs
+<span class="cstat-no" title="statement not covered" >		result.send = <span class="fstat-no" title="function not covered" >function(message){</span></span>
+<span class="cstat-no" title="statement not covered" >			message_stack.push(message);</span>
+		};
+&nbsp;
+	}else{ // isNodeJs
+&nbsp;
+		var http     = require('http');
+		var interval = (process.env &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >process.env.POLL_INTERVAL)</span> || 500;
+&nbsp;
+		function request(cb, data){
+&nbsp;
+			var http_opts = {
+		        hostname: '127.0.0.1',
+		        port: port,
+		        path: '/',
+		        method: data ? 'POST' : 'GET'
+    		};
+&nbsp;
+    		var req = http.request(http_opts, function (res) {
+                res.setEncoding('utf8');
+&nbsp;
+                var recieved = '';
+                res.on('data', function (chunk) {
+                    recieved += chunk;
+                });
+&nbsp;
+                res.on('end', function () {
+                	cb(res.statusCode === 500, recieved);
+                });
+            });
+&nbsp;
+            req.on('error', <span class="fstat-no" title="function not covered" >function (err) {</span>
+<span class="cstat-no" title="statement not covered" >                cb(err);</span>
+            });
+&nbsp;
+    		if(data){
+				req.setHeader('Content-Type', 'application/json');
+				var json = JSON.stringify(data);
+				req.setHeader('Content-Length', Buffer.byteLength(json));
+            	req.write(json);
+    		}
+&nbsp;
+    		req.end();
+		}
+&nbsp;
+		var closed  = false;
+		var posting = false;
+		//var polling = false;
+&nbsp;
+		function poll(cb) {    
+	        setTimeout(function () {
+	        	if(closed) return;
+	        	if(posting) return poll();
+	        	//polling = true;
+&nbsp;
+	        	request(function(err, data){
+	        		//polling = false;
+	        		<span class="missing-if-branch" title="if path not taken" >I</span>if(closed) <span class="cstat-no" title="statement not covered" >return;</span>
+&nbsp;
+	        		<span class="missing-if-branch" title="if path not taken" >I</span>if(err){
+<span class="cstat-no" title="statement not covered" >	        			if(!closed)<span class="cstat-no" title="statement not covered" >console.warn("Poll request error: " + err);</span></span>
+<span class="cstat-no" title="statement not covered" >	        			return;</span>
+	        		}else{
+	        			try{
+		                    var results = JSON.parse(data);
+		                    results.forEach(recieve);
+		                }catch(err){
+<span class="cstat-no" title="statement not covered" >		                    console.warn("Poll error " + err + " " + data);</span>
+<span class="cstat-no" title="statement not covered" >		                    return;</span>
+		                }
+	        			(cb || <span class="branch-1 cbranch-no" title="branch not covered" >poll)</span>();
+	        		}
+	        	});
+	        // When a callback is waiting run immediately
+	        }, cb ? 0 : interval);
+	    };
+	    poll();
+&nbsp;
+	    var sendStack = [];
+&nbsp;
+	    function process(){
+	    	if(/*!polling &amp;&amp; */ !posting &amp;&amp; sendStack.length &gt; 0){
+	    		
+	    		var top = sendStack.shift();
+		    	posting = true;
+		    	
+		    	request(function(err, data){
+		    		posting = false;
+		    		
+		    		poll(function(){
+		    			if(top.cb)top.cb(err, JSON.parse(data));
+		    			process();
+		    		});
+		    	}, top.message);
+	    	}
+	    }
+&nbsp;
+	    result = module.exports;
+&nbsp;
+	    result.send = function(message, cb){
+			sendStack.push({message: message, cb: cb});
+			process();
+		};
+&nbsp;
+		result.close = function(){
+			closed = true;
+		};
 	}
 &nbsp;
-    var phantom = spawn(path, result.concat(bridge));
-&nbsp;
-<span class="fstat-no" title="function not covered" >    function fatalError(err) {</span>
-<span class="cstat-no" title="statement not covered" >    	if(err &amp;&amp; err.stack)<span class="cstat-no" title="statement not covered" >console.error(err.stack);</span></span>
-<span class="cstat-no" title="statement not covered" >        try {</span>
-<span class="cstat-no" title="statement not covered" >            phantom.kill();</span>
-        } catch(e) {}
-<span class="cstat-no" title="statement not covered" >        process.exit(1);</span>
-    };
-&nbsp;
-	// Note it's possible to blow up maxEventListeners doing this. 
-	// Consider moving to a single handler.
-	var errorEvents = ['SIGINT', 'SIGTERM', 'uncaughtException'];
-	errorEvents.forEach(function(e){
-		process.on(e, fatalError);
-	});
-    phantom.once('error', function(err){
-    	cb(err);
-    });
-&nbsp;
-    var ignorePattern = options.ignoreErrorPattern;
-    phantom.stderr.on('data', <span class="fstat-no" title="function not covered" >function (data) {</span>
-<span class="cstat-no" title="statement not covered" >        if (!ignorePattern || !ignorePattern.exec(data)) {</span>
-<span class="cstat-no" title="statement not covered" >            console.warn('phantom stderr: ' + data);</span>
-        }
-    });
-&nbsp;
-    var exitCode = 0;
-    phantom.once('exit', function (code) {
-    	errorEvents.forEach(function(e){
-			process.removeListener(e, fatalError);
-		});
-        exitCode = code;
-    });
-&nbsp;
-    // Wait a bit to see if the spawning of phantomjs immediately
-    // fails due to bad path or similar.
-    setTimeout(function () {
-    	<span class="missing-if-branch" title="if path not taken" >I</span>if (exitCode !== 0) {
-<span class="cstat-no" title="statement not covered" >            var msg = "Phantom immediately exited with: ";</span>
-<span class="cstat-no" title="statement not covered" >    		return cb(msg + exitCode);</span>
-    	}
-    }, 100);
-&nbsp;
-    // Wait for 'Server ready' log from phantom
-    phantom.stdout.once('data', function (data) {
-        // setup normal listener now
-        phantom.stdout.on('data', <span class="fstat-no" title="function not covered" >function (data) {</span>
-<span class="cstat-no" title="statement not covered" >            return console.log('phantom stdout: ' + data);</span>
-        });
-&nbsp;
-        // We do this twice - first to get ports this process is 
-        // listening on and again to get ports phantom is listening 
-        // on. This is to work around this bug in libuv: 
-        // https://github.com/joyent/libuv/issues/962 - this is only 
-        // necessary when using cluster, but it's here regardless
-        getPorts(process.pid, function (procErr, procPorts) {
-        	getPorts(phantom.pid, function (phErr, phPorts) {
-        		var port;
-        		for (var i = 0; i &lt; phPorts.length; i++) {
-                    <span class="missing-if-branch" title="else path not taken" >E</span>if (procPorts.indexOf(phPorts[i]) == -1) {
-                        port = phPorts[i];
-                    }
-        		}
-        		<span class="missing-if-branch" title="else path not taken" >E</span>if (port) { cb(null, phantom, port); }
-        		else { <span class="cstat-no" title="statement not covered" >cb("Error extracting port."); </span>}
-        	});
-        });
-    });
-}
-&nbsp;
-// Now need to figure out what port it's listening on - since Phantom 
-// is busted and can't tell us this we need to use lsof on mac, and
-// netstat on Linux. Note that if phantom could tell you the port it 
-// ends up listening on we wouldn't need to do this - server.port 
-// returns 0 when you ask for port 0 (i.e. random free port). If they 
-// ever fix that this will become much simpler
-function getPorts (pid, cb) {
-&nbsp;
-    var platform = require('os').platform();
-    var cmd = null;
-    switch (platform) {
-<span class="branch-0 cbranch-no" title="branch not covered" >        case 'linux':</span>
-<span class="cstat-no" title="statement not covered" >	        cmd = 'netstat -nlp | grep "[[:space:]]' + pid + '/"';</span>
-<span class="cstat-no" title="statement not covered" >	        break;</span>
-<span class="branch-1 cbranch-no" title="branch not covered" >        case 'darwin':</span>
-<span class="cstat-no" title="statement not covered" >            cmd = 'lsof -p ' + pid + ' | grep LISTEN';</span>
-<span class="cstat-no" title="statement not covered" >            break;</span>
-        case 'win32':
-            cmd = 'netstat -ano | findstr /R "\\&lt;' + pid + '\\&gt;"';
-            break;
-<span class="branch-3 cbranch-no" title="branch not covered" >        case 'cygwin':</span>
-<span class="cstat-no" title="statement not covered" >            cmd = 'netstat -ano | grep ' + pid;</span>
-<span class="cstat-no" title="statement not covered" >            break;</span>
-<span class="branch-4 cbranch-no" title="branch not covered" >        default:</span>
-<span class="cstat-no" title="statement not covered" >            var msg = "Your OS is not supported yet. Tell us how\n\</span>
-                       to get the listening port based on PID";
-<span class="cstat-no" title="statement not covered" >            return callback(msg.replace(/\n\s*/,' '));</span>
-    }
-&nbsp;
-    exec(cmd, function (err, stdout, stderr) {
-    	// Can happen if grep finds no matching lines, so ignore it.
-    	if (err !== null)stdout = '';
-        
-        var ip = /(?:127\.0\.0\.1|localhost|0\.0\.0\.0):(\d+)/ig;
-        var match, ports = [];
-                
-        while (match = ip.exec(stdout)) {
-            if(match[1] !== '0')ports.push(match[1]);
-        }
-&nbsp;
-        cb(err, ports);
-   	});
-}</pre></td></tr>
+	return result;
+}};</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jul 01 2014 21:16:10 GMT+0200 (Mitteleuropäische Sommerzeit)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jul 01 2014 20:36:36 GMT+0200 (Mitteleuropäische Sommerzeit)</div>
 </div>
 
 <script src="../prettify.js"></script>

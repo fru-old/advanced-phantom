@@ -16,7 +16,9 @@
   "devDependencies": {
     "phantomjs": "~1.9.7-8",
     "grunt": "~0.4.5",
-    "grunt-testing-nodeunit": "0.0.2"
+    "grunt-testing-nodeunit": "0.0.2",
+    "grunt-docco": "~0.3.3",
+    "grunt-jscs": "^0.6.1"
   },
   "engines": {
     "node": "*"

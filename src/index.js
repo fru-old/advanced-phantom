@@ -1,329 +1,153 @@
-"use strict";
+'use strict';
 
-var http  = require('http');
-var spawn = require('./spawn.js');
+var spawn   = require('./spawn.js');
+var network = require('./network.js');
+var pages   = {};
 
-var POLL_INTERVAL   = process.env.POLL_INTERVAL || 500;
-
-var queue = function (worker) {
-    var _q = [];
-    var running = false;
-    var q = {
-        push: function (obj) {
-            _q.push(obj);
-            q.process();
-        },
-        process: function () {
-            if (running || _q.length === 0) return;
-            running = true;
-            var cb = function () {
-                running = false;
-                q.process();
-            }
-            var task = _q.shift();
-            worker(task, cb);
-        }
-    }
-    return q;
-}
-
-function callbackOrDummy (callback, poll_func) {
-    if (!callback) return function () {};
-    if (poll_func) {
-        return function () {
-            var args = Array.prototype.slice.call(arguments);
-            // console.log("Polling for results before returning with: " + JSON.stringify(args));
-            poll_func(function () {
-                // console.log("Inside...");
-                callback.apply(null, args);
-            });
-        }
-    }
-    else {
-        return callback;
-    }
-}
-
-function unwrapArray (arr) {
-    return arr && arr.length == 1 ? arr[0] : arr
-}
-
-function wrapArray(arr) {
-    // Ensure that arr is an Array
-    return (arr instanceof Array) ? arr : [arr];
-}
-
-exports.create = function (callback, options) {
-
-    spawn(options, function (err, phantom, port) {
-        if (err) return callback(err);
-
-        // console.log("Phantom spawned with web server on port: " + port);
-
-        var pages = {};
-
-        var setup_new_page = function (id) {
-            // console.log("Page created with id: " + id);
-var methods = [
-    'addCookie', 'childFramesCount', 'clearCookies', 'close',  
+var pageMethods = [
+    'addCookie', 'childFramesCount', 'clearCookies', 'close',
     'currentFrameName', 'deleteCookie', 'evaluateJavaScript',
-    'childFramesName', 'includeJs', 'uploadFile', 'injectJs', 
-    'renderBase64', 'open', 'goBack', 'release', 'goForward',
+    'childFramesName', 'includeJs', 'uploadFile', 'injectJs',
+    'renderBase64', 'switchToChildFrame', 'goForward', 'set',
     'reload', 'switchToParentFrame', 'openUrl', 'setContent',
     'switchToFrame', 'switchToChildFrame', 'stop', 'getPage',
-    'switchToMainFrame', 'switchToFocusedFrame', 'sendEvent', 
-    'render', 'switchToChildFrame', 'go', 'evaluateAsync'
+    'switchToMainFrame', 'switchToFocusedFrame', 'sendEvent',
+    'evaluateAsync', 'get', 'open', 'go', 'goBack', 'render',
+    'release', 'waitForSelector', 'evaluate', 'setFn'
 ];
-            var page = {
-                setFn: function (name, fn, cb) {
-                    request_queue.push([[id, 'setFunction', name, fn.toString()], callbackOrDummy(cb, poll_func)]);
-                },
-                get: function (name, cb) {
-                    request_queue.push([[id, 'getProperty', name], callbackOrDummy(cb, poll_func)]);
-                },
-                set: function (name, val, cb) {
-                    request_queue.push([[id, 'setProperty', name, val], callbackOrDummy(cb, poll_func)]);
-                },
-                evaluate: function (fn, cb) {
-                    var extra_args = [];
-                    if (arguments.length > 2) {
-                        extra_args = Array.prototype.slice.call(arguments, 2);
-                        // console.log("Extra args: " + extra_args);
+
+var globalMethods = [
+    'injectJs', 'clearCookies', 'set', 'get', 'deleteCookie',
+    'addCookie', 'createPage', 'exit', 'on'
+];
+
+function isFunc (func) {
+    return typeof func === 'function';
+}
+
+exports.create = function (cb, options) {
+    spawn(options, function (err, instance, port) {
+        if (err) { return cb(err); }
+
+        var phantom  = instance;
+        var message  = network.recieve(function (data, done) {
+            var args = data.args;
+            var page = pages[data.pageId];
+            var call = (page || phantom)[data.callback];
+
+            if (page) {
+                if (data.callback === 'onPageCreated') {
+                    var newPage = setupPage(data.args[0], message);
+                    if (page.onPageCreated) {
+                        page.onPageCreated(newPage);
                     }
-                    request_queue.push([[id, 'evaluate', fn.toString()].concat(extra_args), callbackOrDummy(cb, poll_func)]);
-                },
-                waitForSelector: function (selector, cb, timeout) {
-                    var startTime = Date.now();
-                    var timeoutInterval = 150;
-                    var testRunning = false;
-                    //if evaluate succeeds, invokes callback w/ true, if timeout,
-                    // invokes w/ false, otherwise just exits
-                    var testForSelector = function () {
-                        var elapsedTime = Date.now() - startTime;
-
-                        if (elapsedTime > timeout) {
-                            return cb("Timeout waiting for selector: " + selector);
-                        }
-
-                        page.evaluate(function (selector) {
-                            return document.querySelectorAll(selector).length;
-                        }, function (result) {
-                            testRunning = false;
-                            if (result > 0) {//selector found
-                                cb();
-                            }
-                            else {
-                                setTimeout(testForSelector, timeoutInterval);
-                            }
-                        }, selector);
-                    };
-
-                    timeout = timeout || 10000; //default timeout is 10 sec;
-                    setTimeout(testForSelector, timeoutInterval);
-                },
-            };
-            methods.forEach(function (method) {
-                page[method] = function () {
-                    var all_args = Array.prototype.slice.call(arguments);
-                    var callback = null;
-                    if (all_args.length > 0 && typeof all_args[all_args.length - 1] === 'function') {
-                        callback = all_args.pop();
-                    }
-                    var req_params = [id, method];
-                    request_queue.push([req_params.concat(all_args), callbackOrDummy(callback, poll_func)]);
+                }else if (call) {
+                    callAndNormaizedArgs(call, page, args);
                 }
-            });
-
-            pages[id] = page;
-
-            return page;            
-        }
-
-        var poll_func = setup_long_poll(phantom, port, pages, setup_new_page);
-
-        var request_queue = queue(function (paramarr, next) {
-            var params = paramarr[0];
-            var callback = paramarr[1];
-            var page = params[0];
-            var method = params[1];
-            var args = params.slice(2);
-            
-            var http_opts = {
-                hostname: '127.0.0.1',
-                port: port,
-                path: '/',
-                method: 'POST',
+            }else if (call) {
+                call.apply(phantom, args);
             }
+        }, port);
 
-            phantom.POSTING = true;
-
-            var req = http.request(http_opts, function (res) {
-                // console.log("Got a response: " + res.statusCode);
-                var err = res.statusCode == 500 ? true : false;
-                res.setEncoding('utf8');
-                var data = '';
-                res.on('data', function (chunk) {
-                    data += chunk;
-                });
-                res.on('end', function () {
-                    phantom.POSTING = false;
-                    if (!data) {
-                        next();
-                        return callback("No response body for page." + method + "()");
-                    }
-                    var results = JSON.parse(data);
-                    // console.log("Response: ", results);
-                    
-                    if (err) {
-                        next();
-                        return callback(results);
-                    }
-
-                    if (method === 'createPage') {
-                        var id = results.page_id;
-                        var page = setup_new_page(id);
-                        
-                        next();
-                        return callback(null, page);
-                    }
-
-                    // Not createPage - just run the callback
-                    next();
-                    callback(null, results);
-                });
-            });
-
-            req.on('error', function (err) {
-                console.warn("Request() error evaluating " + method + "() call: " + err);
-                next();
-            })
-
-            req.setHeader('Content-Type', 'application/json');
-
-            var json = JSON.stringify({page: page, method: method, args: args});
-            // console.log("Sending: ", json);
-            req.setHeader('Content-Length', Buffer.byteLength(json));
-            req.write(json);
-            req.end();
+        phantom.once('exit', function () {
+            message.close();
         });
-
-        var proxy = {
-            process: phantom,
-            createPage: function (callback) {
-                request_queue.push([[0,'createPage'], callbackOrDummy(callback, poll_func)]);
-            },
-            injectJs: function (filename,callback) {
-                request_queue.push([[0,'injectJs', filename], callbackOrDummy(callback, poll_func)]);
-            },
-            addCookie: function (cookie, callback) {
-                request_queue.push([[0,'addCookie', cookie], callbackOrDummy(callback, poll_func)]);
-            },
-            clearCookies: function (callback) {
-                request_queue.push([[0, 'clearCookies'], callbackOrDummy(callback, poll_func)]);
-            },
-            deleteCookie: function (cookie, callback) {
-                request_queue.push([[0, 'deleteCookie', cookie], callbackOrDummy(callback, poll_func)]);
-            },
-            set : function (property, value, callback) {
-                request_queue.push([[0, 'setProperty', property, value], callbackOrDummy(callback, poll_func)]);
-            },
-            get : function (property, callback) {
-                request_queue.push([[0, 'getProperty', property], callbackOrDummy(callback, poll_func)]);
-            },
-            exit: function(callback){
-                phantom.kill('SIGTERM');
-                callbackOrDummy(callback)();
-            },
-            on: function () {
-                phantom.on.apply(phantom, arguments);
-            },
-        };
-        
-        callback(null, proxy);
+        cb(null, setupGlobal(message, phantom));
     });
 }
 
-function setup_long_poll (phantom, port, pages, setup_new_page) {
-    // console.log("Setting up long poll");
+function setupPage (id, message) {
+    return pages[id] = buildMethods({
+        setFn: function (name, fn, cb) {
+            message.send({
+                page: id,
+                method: 'setFunction',
+                args: [name, fn.toString()]
+            }, cb);
+        },
+        evaluate: function (fn, cb) {
+            var args = Array.prototype.slice.call(arguments, 2);
+            message.send({
+                page: id,
+                method: 'evaluate',
+                args: [fn.toString()].concat(args)
+            },  cb);
+        },
+        waitForSelector: waitForSelector,
+    }, pageMethods, id, message);
+}
 
-    var http_opts = {
-        hostname: '127.0.0.1',
-        port: port,
-        path: '/',
-        method: 'GET',
+function setupGlobal (message, phantom) {
+    return buildMethods({
+        process: phantom,
+        createPage: function (cb) {
+            function oninit (err, result) {
+                return cb(null, setupPage(result.pageId, message));
+            }
+            message.send({method: 'createPage'}, oninit);
+        },
+        exit: function (cb) {
+            phantom.kill('SIGTERM');
+            if (cb) { cb(); }
+        },
+        on: function () {
+            phantom.on.apply(phantom, arguments);
+        },
+    }, globalMethods, null, message);
+}
+
+function buildMethods (target, methods, id, message) {
+    methods.forEach(function (method) {
+
+        if (target[method]) { return; }
+        target[method] = function () {
+
+            var args = Array.prototype.slice.call(arguments);
+            var call = isFunc(args[args.length - 1]);
+
+            var mesg = {page: id, method: method, args: args};
+            message.send(mesg, call && args.pop());
+        }
+    });
+    return target;
+}
+
+function callAndNormaizedArgs (func, page, args) {
+    // This 'old' call behaviour is deprecated
+    if (args && func.length <= 1) {
+        args = args.length === 1 ? args : [args];
+    } else {
+        args = (args instanceof Array) ? args : [args];
     }
+    func.apply(page, args);
+}
 
-    var dead = false;
-    phantom.once('exit', function () { dead = true; });
+/*
+ * Continuously wait for a selector to be pressent in the phantom
+ * page. Once the selector is found or when a timeout occurs the cb
+ * is invoked.
+ */
+function waitForSelector (selector, cb, timeout) {
+    var startTime = Date.now();
+    var interval  = 150;
+    var endedTime = startTime + (timeout || 10000) // 10 sec
 
-    var poll_func = function (cb) {
-        if (dead) return;
-        if (phantom.POSTING) return cb();
-        // console.log("Polling...");
-        var req = http.get(http_opts, function(res) {
-            res.setEncoding('utf8');
-            var data = '';
-            res.on('data', function (chunk) {
-                data += chunk;
-            });
-            res.on('end', function () {
-                // console.log("Poll results: " + data);
-                if (dead) return;
-                try {
-                    var results = JSON.parse(data);
-                }
-                catch (err) {
-                    console.warn("Error parsing JSON from phantom: " + err);
-                    console.warn("Data from phantom was: " + data);
-                    return;
-                }
-                // if (results.length > 0) {
-                //     console.log("Long poll results: ", results);
-                // }
-                // else {
-                //     console.log("Zero callbacks");
-                // }
-                results.forEach(function (r) {
-                    if (r.page_id) {
-                        if (pages[r.page_id] && r.callback === 'onPageCreated') {
-                            var new_page = setup_new_page(r.args[0]);
-                            if (pages[r.page_id].onPageCreated) {
-                                pages[r.page_id].onPageCreated(new_page);
-                            }
-                        }
-                        else if (pages[r.page_id] && pages[r.page_id][r.callback]) {
-                            var callbackFunc = pages[r.page_id][r.callback];
-                            if (callbackFunc.length > 1) {
-                                // We use `apply` if the function is expecting multiple args
-                                callbackFunc.apply(pages[r.page_id], wrapArray(r.args));
-                            }
-                            else {
-                                // Old `call` behaviour is deprecated
-                                callbackFunc.call(pages[r.page_id], unwrapArray(r.args));
-                            }
-                        }
-                    }
-                    else {
-                        var cb = callbackOrDummy(phantom[r.callback]);
-                        cb.apply(phantom, r.args);
-                    }
-                });
+    setTimeout(function testForSelector () {
+
+        if (Date.now() > endedTime) {
+            return cb('Timeout waiting for selector: ' + selector);
+        }
+
+        this.evaluate(function (selector) {
+            return document.querySelectorAll(selector).length;
+
+        }, function (result) {
+            if (result > 0) {
                 cb();
-            });
-        });
-        req.on('error', function (err) {
-            if (dead || phantom.killed) return;
-            console.warn("Poll Request error: " + err);
-        });
-    };
+            } else {
+                setTimeout(testForSelector, interval);
+            }
+        }, selector);
 
-    var repeater = function () {
-        setTimeout(function () {
-            poll_func(repeater)
-        }, POLL_INTERVAL);
-    }
-
-    repeater();
-
-    return poll_func;
+    }, interval);
 }

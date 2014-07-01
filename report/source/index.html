@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="bridge.html">
+                bridge.js
+              </a>
+            
+              
+              <a class="source" href="enhance.html">
+                enhance.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="message.html">
+                message.js
+              </a>
+            
+              
+              <a class="source" href="old_bridge.html">
+                old_bridge.js
+              </a>
+            
+              
+              <a class="source" href="old_index.html">
+                old_index.js
+              </a>
+            
+              
+              <a class="source" href="old_message.html">
+                old_message.js
+              </a>
+            
+              
+              <a class="source" href="spawn.html">
+                spawn.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-pi">'use strict'</span>;
+
+<span class="hljs-keyword">var</span> spawn = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./spawn.js'</span>);
+<span class="hljs-keyword">var</span> com   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./message.js'</span>);
+<span class="hljs-keyword">var</span> pages = {};
+
+<span class="hljs-keyword">var</span> pageMethods = [
+    <span class="hljs-string">'addCookie'</span>, <span class="hljs-string">'childFramesCount'</span>, <span class="hljs-string">'clearCookies'</span>, <span class="hljs-string">'close'</span>,
+    <span class="hljs-string">'currentFrameName'</span>, <span class="hljs-string">'deleteCookie'</span>, <span class="hljs-string">'evaluateJavaScript'</span>,
+    <span class="hljs-string">'childFramesName'</span>, <span class="hljs-string">'includeJs'</span>, <span class="hljs-string">'uploadFile'</span>, <span class="hljs-string">'injectJs'</span>,
+    <span class="hljs-string">'renderBase64'</span>, <span class="hljs-string">'switchToChildFrame'</span>, <span class="hljs-string">'goForward'</span>, <span class="hljs-string">'set'</span>,
+    <span class="hljs-string">'reload'</span>, <span class="hljs-string">'switchToParentFrame'</span>, <span class="hljs-string">'openUrl'</span>, <span class="hljs-string">'setContent'</span>,
+    <span class="hljs-string">'switchToFrame'</span>, <span class="hljs-string">'switchToChildFrame'</span>, <span class="hljs-string">'stop'</span>, <span class="hljs-string">'getPage'</span>,
+    <span class="hljs-string">'switchToMainFrame'</span>, <span class="hljs-string">'switchToFocusedFrame'</span>, <span class="hljs-string">'sendEvent'</span>,
+    <span class="hljs-string">'evaluateAsync'</span>, <span class="hljs-string">'get'</span>, <span class="hljs-string">'open'</span>, <span class="hljs-string">'go'</span>, <span class="hljs-string">'goBack'</span>, <span class="hljs-string">'render'</span>,
+    <span class="hljs-string">'release'</span>, <span class="hljs-string">'waitForSelector'</span>, <span class="hljs-string">'evaluate'</span>, <span class="hljs-string">'setFn'</span>
+];
+
+<span class="hljs-keyword">var</span> globalMethods = [
+    <span class="hljs-string">'injectJs'</span>, <span class="hljs-string">'clearCookies'</span>, <span class="hljs-string">'set'</span>, <span class="hljs-string">'get'</span>, <span class="hljs-string">'deleteCookie'</span>,
+    <span class="hljs-string">'addCookie'</span>, <span class="hljs-string">'createPage'</span>, <span class="hljs-string">'exit'</span>, <span class="hljs-string">'on'</span>
+];
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isFunc</span> <span class="hljs-params">(func)</span> {</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> func === <span class="hljs-string">'function'</span>;
+}
+
+exports.create = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(cb, options)</span> {</span>
+    spawn(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err, instance, port)</span> {</span>
+        <span class="hljs-keyword">if</span> (err) { <span class="hljs-keyword">return</span> cb(err); }
+
+        <span class="hljs-keyword">var</span> phantom  = instance;
+        <span class="hljs-keyword">var</span> message  = com.recieve(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, done)</span> {</span>
+            <span class="hljs-keyword">var</span> args = data.args;
+            <span class="hljs-keyword">var</span> page = pages[data.pageId];
+            <span class="hljs-keyword">var</span> call = (page || phantom)[data.callback];
+
+            <span class="hljs-keyword">if</span> (page) {
+                <span class="hljs-keyword">if</span> (data.callback === <span class="hljs-string">'onPageCreated'</span>) {
+                    <span class="hljs-keyword">var</span> newPage = setupPage(data.args[<span class="hljs-number">0</span>], message);
+                    <span class="hljs-keyword">if</span> (page.onPageCreated) {
+                        page.onPageCreated(newPage);
+                    }
+                }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (call) {
+                    callAndNormaizedArgs(call, page, args);
+                }
+            }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (call) {
+                call.apply(phantom, args);
+            }
+        }, port);
+
+        phantom.once(<span class="hljs-string">'exit'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            message.close();
+        });
+        cb(<span class="hljs-literal">null</span>, setupGlobal(message, phantom));
+    });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setupPage</span> <span class="hljs-params">(id, message)</span> {</span>
+    <span class="hljs-keyword">return</span> pages[id] = buildMethods({
+        setFn: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name, fn, cb)</span> {</span>
+            message.send({
+                page: id,
+                method: <span class="hljs-string">'setFunction'</span>,
+                args: [name, fn.toString()]
+            }, cb);
+        },
+        evaluate: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(fn, cb)</span> {</span>
+            <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">2</span>);
+            message.send({
+                page: id,
+                method: <span class="hljs-string">'evaluate'</span>,
+                args: [fn.toString()].concat(args)
+            },  cb);
+        },
+        waitForSelector: waitForSelector,
+    }, pageMethods, id, message);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setupGlobal</span> <span class="hljs-params">(message, phantom)</span> {</span>
+    <span class="hljs-keyword">return</span> buildMethods({
+        process: phantom,
+        createPage: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(cb)</span> {</span>
+            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">oninit</span> <span class="hljs-params">(err, result)</span> {</span>
+                <span class="hljs-keyword">return</span> cb(<span class="hljs-literal">null</span>, setupPage(result.pageId, message));
+            }
+            message.send({method: <span class="hljs-string">'createPage'</span>}, oninit);
+        },
+        exit: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(cb)</span> {</span>
+            phantom.kill(<span class="hljs-string">'SIGTERM'</span>);
+            <span class="hljs-keyword">if</span> (cb) { cb(); }
+        },
+        on: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+            phantom.on.apply(phantom, <span class="hljs-built_in">arguments</span>);
+        },
+    }, globalMethods, <span class="hljs-literal">null</span>, message);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">buildMethods</span> <span class="hljs-params">(target, methods, id, message)</span> {</span>
+    methods.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(method)</span> {</span>
+
+        <span class="hljs-keyword">if</span> (target[method]) { <span class="hljs-keyword">return</span>; }
+        target[method] = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+
+            <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>);
+            <span class="hljs-keyword">var</span> call = isFunc(args[args.length - <span class="hljs-number">1</span>]);
+
+            <span class="hljs-keyword">var</span> mesg = {page: id, method: method, args: args};
+            message.send(mesg, call &amp;&amp; args.pop());
+        }
+    });
+    <span class="hljs-keyword">return</span> target;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callAndNormaizedArgs</span> <span class="hljs-params">(func, page, args)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This ‘old’ call behaviour is deprecated</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (args &amp;&amp; func.length &lt;= <span class="hljs-number">1</span>) {
+        args = args.length === <span class="hljs-number">1</span> ? args : [args];
+    } <span class="hljs-keyword">else</span> {
+        args = (args <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>) ? args : [args];
+    }
+    func.apply(page, args);
+}
+
+<span class="hljs-comment">/*
+ * Continuously wait for a selector to be pressent in the phantom
+ * page. Once the selector is found or when a timeout occurs the cb
+ * is invoked.
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">waitForSelector</span> <span class="hljs-params">(selector, cb, timeout)</span> {</span>
+    <span class="hljs-keyword">var</span> startTime = <span class="hljs-built_in">Date</span>.now();
+    <span class="hljs-keyword">var</span> interval  = <span class="hljs-number">150</span>;
+    <span class="hljs-keyword">var</span> endedTime = startTime + (timeout || <span class="hljs-number">10000</span>) <span class="hljs-comment">// 10 sec</span>
+
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testForSelector</span> <span class="hljs-params">()</span> {</span>
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Date</span>.now() &gt; endedTime) {
+            <span class="hljs-keyword">return</span> cb(<span class="hljs-string">'Timeout waiting for selector: '</span> + selector);
+        }
+
+        <span class="hljs-keyword">this</span>.evaluate(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(selector)</span> {</span>
+            <span class="hljs-keyword">return</span> document.querySelectorAll(selector).length;
+
+        }, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(result)</span> {</span>
+            <span class="hljs-keyword">if</span> (result &gt; <span class="hljs-number">0</span>) {
+                cb();
+            } <span class="hljs-keyword">else</span> {
+                setTimeout(testForSelector, interval);
+            }
+        }, selector);
+
+    }, interval);
+}</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

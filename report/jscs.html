@@ -1,0 +1,320 @@
+All identifiers must be camelCase or UPPER_CASE at src/index.js :
+     5 |var pages = {};
+     6 |
+     7 |var page_methods = [
+------------^
+     8 |    'addCookie', 'childFramesCount', 'clearCookies', 'close',  
+     9 |    'currentFrameName', 'deleteCookie', 'evaluateJavaScript',
+
+Illegal trailing whitespace at src/index.js :
+     6 |
+     7 |var page_methods = [
+     8 |    'addCookie', 'childFramesCount', 'clearCookies', 'close',  
+-----------------------------------------------------------------------^
+     9 |    'currentFrameName', 'deleteCookie', 'evaluateJavaScript',
+    10 |    'childFramesName', 'includeJs', 'uploadFile', 'injectJs', 
+
+Illegal trailing whitespace at src/index.js :
+     8 |    'addCookie', 'childFramesCount', 'clearCookies', 'close',  
+     9 |    'currentFrameName', 'deleteCookie', 'evaluateJavaScript',
+    10 |    'childFramesName', 'includeJs', 'uploadFile', 'injectJs', 
+----------------------------------------------------------------------^
+    11 |    'renderBase64', 'switchToChildFrame', 'goForward', 'set',
+    12 |    'reload', 'switchToParentFrame', 'openUrl', 'setContent',
+
+Illegal trailing whitespace at src/index.js :
+    12 |    'reload', 'switchToParentFrame', 'openUrl', 'setContent',
+    13 |    'switchToFrame', 'switchToChildFrame', 'stop', 'getPage',
+    14 |    'switchToMainFrame', 'switchToFocusedFrame', 'sendEvent', 
+----------------------------------------------------------------------^
+    15 |    'evaluateAsync', 'get', 'open', 'go', 'goBack', 'render', 
+    16 |    'release', 'waitForSelector', 'evaluate', 'setFn'
+
+Illegal trailing whitespace at src/index.js :
+    13 |    'switchToFrame', 'switchToChildFrame', 'stop', 'getPage',
+    14 |    'switchToMainFrame', 'switchToFocusedFrame', 'sendEvent', 
+    15 |    'evaluateAsync', 'get', 'open', 'go', 'goBack', 'render', 
+----------------------------------------------------------------------^
+    16 |    'release', 'waitForSelector', 'evaluate', 'setFn'
+    17 |];
+
+All identifiers must be camelCase or UPPER_CASE at src/index.js :
+    17 |];
+    18 |
+    19 |var global_methods = [
+------------^
+    20 |    'injectJs', 'clearCookies', 'set', 'get', 'deleteCookie',
+    21 |    'addCookie', 'createPage', 'exit', 'on'
+
+If statement without curly braces at src/index.js :
+    28 |exports.create = function (cb, options) {
+    29 |    spawn(options, function (err, instance, port) {
+    30 |        if (err) return cb(err);
+----------------^
+    31 |
+    32 |        var phantom  = instance;
+
+Missing space before opening curly brace for block expressions at src/index.js :
+    31 |
+    32 |        var phantom  = instance;
+    33 |        var message  = com.recieve(function(data, done){
+--------------------------------------------------------------^
+    34 |            var args = data.args;
+    35 |            var page = pages[data.pageId];
+
+Missing space before opening curly brace at src/index.js :
+    31 |
+    32 |        var phantom  = instance;
+    33 |        var message  = com.recieve(function(data, done){
+--------------------------------------------------------------^
+    34 |            var args = data.args;
+    35 |            var page = pages[data.pageId];
+
+Should be one space instead of 0, after "if" keyword at src/index.js :
+    45 |                    callAndNormaizedArgs(call, page, args);
+    46 |                }
+    47 |            }else if(call){
+----------------------------^
+    48 |                call.apply(phantom, args);
+    49 |            }
+
+Missing space before opening curly brace for block expressions at src/index.js :
+    45 |                    callAndNormaizedArgs(call, page, args);
+    46 |                }
+    47 |            }else if(call){
+---------------------------------^
+    48 |                call.apply(phantom, args);
+    49 |            }
+
+Missing space before opening curly brace at src/index.js :
+    50 |        }, port);
+    51 |
+    52 |        phantom.once('exit', function(){
+----------------------------------------------^
+    53 |            message.close();
+    54 |        });
+
+Missing space before opening curly brace for block expressions at src/index.js :
+    50 |        }, port);
+    51 |
+    52 |        phantom.once('exit', function(){
+----------------------------------------------^
+    53 |            message.close();
+    54 |        });
+
+Illegal trailing whitespace at src/index.js :
+    61 |        setFn: function (name, fn, cb) {
+    62 |            message.send({
+    63 |                page: id, 
+----------------------------------^
+    64 |                method: 'setFunction', 
+    65 |                args: [name, fn.toString()]
+
+Illegal trailing whitespace at src/index.js :
+    62 |            message.send({
+    63 |                page: id, 
+    64 |                method: 'setFunction', 
+-----------------------------------------------^
+    65 |                args: [name, fn.toString()]
+    66 |            }, cb);
+
+Illegal trailing whitespace at src/index.js :
+    69 |            var args = Array.prototype.slice.call(arguments, 2);
+    70 |            message.send({
+    71 |                page: id, 
+----------------------------------^
+    72 |                method: 'evaluate', 
+    73 |                args: [fn.toString()].concat(args)
+
+Illegal trailing whitespace at src/index.js :
+    70 |            message.send({
+    71 |                page: id, 
+    72 |                method: 'evaluate', 
+--------------------------------------------^
+    73 |                args: [fn.toString()].concat(args)
+    74 |            },  cb);
+
+All identifiers must be camelCase or UPPER_CASE at src/index.js :
+    75 |        },
+    76 |        waitForSelector: waitForSelector,
+    77 |    }, page_methods, id, message);      
+---------------^
+    78 |}
+    79 |
+
+Illegal trailing whitespace at src/index.js :
+    75 |        },
+    76 |        waitForSelector: waitForSelector,
+    77 |    }, page_methods, id, message);      
+------------------------------------------------^
+    78 |}
+    79 |
+
+Multiple line break at src/index.js :
+    77 |    }, page_methods, id, message);      
+    78 |}
+    79 |
+--------^
+    80 |
+    81 |function setupGlobal (message, phantom) {
+
+Missing space before opening curly brace for block expressions at src/index.js :
+    83 |        process: phantom,
+    84 |        createPage: function (cb) {
+    85 |            function oninit(err, result){
+-----------------------------------------------^
+    86 |                return cb(null, setupPage(result.pageId, message));
+    87 |            }
+
+Missing space before opening curly brace at src/index.js :
+    83 |        process: phantom,
+    84 |        createPage: function (cb) {
+    85 |            function oninit(err, result){
+-----------------------------------------------^
+    86 |                return cb(null, setupPage(result.pageId, message));
+    87 |            }
+
+Missing space before opening curly brace at src/index.js :
+    88 |            message.send({method: 'createPage'}, oninit);
+    89 |        },
+    90 |        exit: function(cb){
+---------------------------------^
+    91 |            phantom.kill('SIGTERM');
+    92 |            if(cb)cb();
+
+Missing space before opening curly brace for block expressions at src/index.js :
+    88 |            message.send({method: 'createPage'}, oninit);
+    89 |        },
+    90 |        exit: function(cb){
+---------------------------------^
+    91 |            phantom.kill('SIGTERM');
+    92 |            if(cb)cb();
+
+If statement without curly braces at src/index.js :
+    90 |        exit: function(cb){
+    91 |            phantom.kill('SIGTERM');
+    92 |            if(cb)cb();
+--------------------^
+    93 |        },
+    94 |        on: function () {
+
+Should be one space instead of 0, after "if" keyword at src/index.js :
+    90 |        exit: function(cb){
+    91 |            phantom.kill('SIGTERM');
+    92 |            if(cb)cb();
+----------------------^
+    93 |        },
+    94 |        on: function () {
+
+All identifiers must be camelCase or UPPER_CASE at src/index.js :
+    95 |            phantom.on.apply(phantom, arguments);
+    96 |        },
+    97 |    }, global_methods, null, message);
+---------------^
+    98 |}
+    99 |
+
+If statement without curly braces at src/index.js :
+   101 |    methods.forEach(function (method) {
+   102 |
+   103 |        if (target[method]) return;
+----------------^
+   104 |        target[method] = function(){
+   105 |
+
+Missing space before opening curly brace at src/index.js :
+   102 |
+   103 |        if (target[method]) return;
+   104 |        target[method] = function(){
+------------------------------------------^
+   105 |
+   106 |            var args = Array.prototype.slice.call(arguments);
+
+Missing space before opening curly brace for block expressions at src/index.js :
+   102 |
+   103 |        if (target[method]) return;
+   104 |        target[method] = function(){
+------------------------------------------^
+   105 |
+   106 |            var args = Array.prototype.slice.call(arguments);
+
+Illegal trailing whitespace at src/index.js :
+   124 |}
+   125 |
+   126 |/* 
+-----------^
+   127 | * Continuously wait for a selector to be pressent in the phantom
+   128 | * page. Once the selector is found or when a timeout occurs the cb 
+
+Illegal trailing whitespace at src/index.js :
+   126 |/* 
+   127 | * Continuously wait for a selector to be pressent in the phantom
+   128 | * page. Once the selector is found or when a timeout occurs the cb 
+----------------------------------------------------------------------------^
+   129 | * is invoked.
+   130 | */
+
+Missing space before opening curly brace for block expressions at src/index.js :
+   134 |    var endedTime = startTime + (timeout || 10000) // 10 sec
+   135 |
+   136 |    setTimeout(function testForSelector(){
+------------------------------------------------^
+   137 |
+   138 |        if(Date.now() > endedTime){
+
+Missing space before opening curly brace at src/index.js :
+   134 |    var endedTime = startTime + (timeout || 10000) // 10 sec
+   135 |
+   136 |    setTimeout(function testForSelector(){
+------------------------------------------------^
+   137 |
+   138 |        if(Date.now() > endedTime){
+
+Should be one space instead of 0, after "if" keyword at src/index.js :
+   136 |    setTimeout(function testForSelector(){
+   137 |
+   138 |        if(Date.now() > endedTime){
+------------------^
+   139 |            return cb("Timeout waiting for selector: " + selector);
+   140 |        }
+
+Missing space before opening curly brace for block expressions at src/index.js :
+   136 |    setTimeout(function testForSelector(){
+   137 |
+   138 |        if(Date.now() > endedTime){
+-----------------------------------------^
+   139 |            return cb("Timeout waiting for selector: " + selector);
+   140 |        }
+
+Invalid quote mark found at src/index.js :
+   137 |
+   138 |        if(Date.now() > endedTime){
+   139 |            return cb("Timeout waiting for selector: " + selector);
+------------------------------^
+   140 |        }
+   141 |
+
+If statement without curly braces at src/index.js :
+   144 |
+   145 |        }, function (result) {
+   146 |            if (result > 0) cb();
+--------------------^
+   147 |            else setTimeout(testForSelector, interval);
+   148 |        }, selector);
+
+Else statement without curly braces at src/index.js :
+   144 |
+   145 |        }, function (result) {
+   146 |            if (result > 0) cb();
+--------------------^
+   147 |            else setTimeout(testForSelector, interval);
+   148 |        }, selector);
+
+Missing line feed at file end at src/index.js :
+   149 |
+   150 |    }, interval);
+   151 |}
+--------^
+
+
+40 code style errors found.

@@ -1,6 +1,6 @@
 var webpage = require('webpage');
 var system  = require('system');
-var message = require('./message.js').phantom;
+var network = require('./network.js');
 
 phantom.onError = function (message, trace) {
 	var mesg = 'PHANTOM ERROR: ' + message;
@@ -21,15 +21,15 @@ phantom.onError = function (message, trace) {
 
 
 var pages  = {};
-var page_id = 1;
+var pageId = 1;
 
-message = message(function(data, done) {
+var message = network.recieve(function(data, done) {
 
 	var page   = pages[data.page];
 	var method = data.method;
 	var args   = data.args || [];
 	if (data.page && !page) {
-		return done('Page with page_id '+data.page+' not found.');
+		return done('Page with pageId '+data.page+' not found.');
 	}
 	if (!method) {
 		return done('Parameter method must be specified.');
@@ -77,38 +77,38 @@ function setup_callbacks (id, page) {
 			if (cb === 'onClosing') args = [];
 			if (cb === 'onPageCreated') args = [setup_page(args[0])];
 
-			message.send({'page_id': id, 'callback': cb, 'args': args});
+			message.send({pageId: id, callback: cb, args: args});
 		};
 	});
 }
 
 function setup_page (page) {
-	page_id += 1;
-	setup_callbacks(page_id, page);
-	pages[page_id] = page;
+	pageId += 1;
+	setup_callbacks(pageId, page);
+	pages[pageId] = page;
 
-	page.getProperty = phantom.getProperty;
-	page.setProperty = phantom.setProperty;
+	page.get = phantom.get;
+	page.set = phantom.set;
 
 	page.setFunction = function (name, fn) {
 		page[name] = eval('(' + fn + ')');
 		return true;
 	}
 
-	return page_id;
+	return pageId;
 }
 
 phantom.createPage = function () {
 	var page  = webpage.create();
 	var id = setup_page(page);
-	return { page_id: id };
+	return { pageId: id };
 };
 
-phantom.getProperty = function (prop) {
+phantom.get = function (prop) {
 	return this[prop];
 };
 
-phantom.setProperty = function (prop, value) {
+phantom.set = function (prop, value) {
 	this[prop] = value;
 	return true;
 };
