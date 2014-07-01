@@ -23,21 +23,16 @@ phantom.onError = function (message, trace) {
 var pages  = {};
 var pageId = 1;
 
-var message = network.recieve(function(data, done) {
+var message = network.recieve(function (data, done) {
 
 	var page   = pages[data.page];
 	var method = data.method;
 	var args   = data.args || [];
-	if (data.page && !page) {
-		return done('Page with pageId '+data.page+' not found.');
-	}
-	if (!method) {
-		return done('Parameter method must be specified.');
-	}
+	var ignore = /cannot call function of deleted QObject/;
+	var nfound = 'Page with pageId ' + data.page + ' not found.';
 
-	if (!data.page) {
-		return done(null, phantom[method].apply(phantom, args));
-	}
+	if (data.page && !page) { return done(nfound); }
+	if (!method) { return done('No method is not specified.'); }
 
 	if (method === 'open') {
 		page.open.apply(page, args.concat(function (success) {
@@ -49,13 +44,13 @@ var message = network.recieve(function(data, done) {
 			try {
 				done();
 			} catch (e) {
-				var ignored = /cannot call function of deleted QObject/;
-				if (!ignored.test(e))page.onError(e);
+				if (!ignore.test(e)) { page.onError(e); }
 			}
 		}));
 
 	} else {
-		return done(null, page[method].apply(page, args));
+		var target = data.page ? page : phantom;
+		return done(null, target[method].apply(target, args));
 	}
 });
 
@@ -73,9 +68,15 @@ function setup_callbacks (id, page) {
 		page[cb] = function (parm) {
 			var args = Array.prototype.slice.call(arguments);
 
-			if (cb === 'onResourceRequested' && parm.url.indexOf('data:image') === 0) return;
-			if (cb === 'onClosing') args = [];
-			if (cb === 'onPageCreated') args = [setup_page(args[0])];
+			if (cb === 'onResourceRequested') {
+				if (parm.url.indexOf('data:image') === 0) {
+					return;
+				}
+			} else if (cb === 'onClosing') {
+				args = [];
+			} else if (cb === 'onPageCreated') {
+				args = [setup_page(args[0])];
+			}
 
 			message.send({pageId: id, callback: cb, args: args});
 		};
